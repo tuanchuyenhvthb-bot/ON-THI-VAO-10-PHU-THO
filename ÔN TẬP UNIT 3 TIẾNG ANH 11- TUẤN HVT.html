@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ÔN TẬP TỪ VỰNG UNIT 3 TIẾNG ANH LỚP 11 CÙNG THẦY TUẤN HVT</title>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --correct: #16a34a;
+            --correct-bg: #f0fdf4;
+            --incorrect: #dc2626;
+            --incorrect-bg: #fef2f2;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 90px;
+            padding-bottom: 50px;
+        }
+
+        /* Sticky Header */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .stat-item {
+            background: #eff6ff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: var(--primary);
+        }
+
+        .btn-reset {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            border-color: var(--primary-light);
+            background-color: #f0f9ff;
+        }
+
+        .option-btn[disabled] {
+            cursor: not-allowed;
+        }
+
+        .option-btn.selected-correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct) !important;
+            color: var(--correct) !important;
+            font-weight: 600;
+        }
+
+        .option-btn.selected-incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect) !important;
+            color: var(--incorrect) !important;
+            font-weight: 600;
+        }
+
+        .option-btn.show-correct {
+            border-color: var(--correct) !important;
+            background-color: var(--correct-bg) !important;
+            color: var(--correct) !important;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary-light);
+            display: none;
+        }
+
+        .explanation-box.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .explanation-item {
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .explanation-item strong {
+            color: #334155;
+        }
+
+        /* Summary Box */
+        .summary-card {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .summary-card.active {
+            display: block;
+        }
+
+        .summary-card h2 {
+            margin-bottom: 15px;
+        }
+
+        .summary-stats {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .sticky-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stats-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+            body {
+                padding-top: 130px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <div class="sticky-header">
+        <div class="header-title">THẦY TUẤN HVT - UNIT 3</div>
+        <div class="stats-container">
+            <div class="stat-item">Đã làm: <span id="stat-done">0</span> / <span id="stat-total">0</span></div>
+            <div class="stat-item">Đúng: <span id="stat-correct">0</span></div>
+            <div class="stat-item">Tiến độ: <span id="stat-percent">0%</span></div>
+        </div>
+        <button class="btn-reset" onclick="initQuiz(true)">Đảo đề & Làm lại</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1 class="page-title">ÔN TẬP TỪ VỰNG UNIT 3 TIẾNG ANH LỚP 11 CÙNG THẦY TUẤN HVT</h1>
+        
+        <div id="quiz-container"></div>
+
+        <!-- Final Summary -->
+        <div id="summary-card" class="summary-card">
+            <h2>🎉 HOÀN THÀNH BÀI TẬP! 🎉</h2>
+            <div class="summary-stats">
+                <p>Tổng số câu: <strong id="sum-total">0</strong></p>
+                <p>Số câu trả lời đúng: <strong id="sum-correct">0</strong></p>
+                <p>Tỷ lệ chính xác: <strong id="sum-percent">0%</strong></p>
+            </div>
+            <button class="btn-reset" style="background: white; color: var(--primary);" onclick="initQuiz(true)">Trộn đề & Làm lại bài</button>
+        </div>
+    </div>
+
+    <script>
+        // Danh sách 47 câu hỏi từ vựng Unit 3
+        const originalQuestions = [
+            {
+                word: "Exhibition",
+                question: "The museum is holding an ________ on smart city technologies next week.",
+                options: [
+                    { letter: "A", text: "exhibition", correct: true, explain: "triển lãm (triển lãm công nghệ thành phố thông minh)." },
+                    { letter: "B", text: "architecture", correct: false, explain: "kiến trúc." },
+                    { letter: "C", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "D", text: "cybercrime", correct: false, explain: "tội phạm mạng." }
+                ]
+            },
+            {
+                word: "Impact",
+                question: "Environmental pollution has a direct ________ on public health.",
+                options: [
+                    { letter: "A", text: "neighbor", correct: false, explain: "hàng xóm." },
+                    { letter: "B", text: "impact", correct: true, explain: "tác động/ảnh hưởng (tác động trực tiếp đến sức khỏe)." },
+                    { letter: "C", text: "victim", correct: false, explain: "nạn nhân." },
+                    { letter: "D", text: "expert", correct: false, explain: "chuyên gia." }
+                ]
+            },
+            {
+                word: "Vehicle",
+                question: "Electric ________s help reduce greenhouse gas emissions in urban areas.",
+                options: [
+                    { letter: "A", text: "skyscraper", correct: false, explain: "tòa nhà cao tầng." },
+                    { letter: "B", text: "vehicle", correct: true, explain: "phương tiện giao thông (phương tiện chạy bằng điện)." },
+                    { letter: "C", text: "sensor", correct: false, explain: "cảm biến." },
+                    { letter: "D", text: "roof garden", correct: false, explain: "vườn trên mái." }
+                ]
+            },
+            {
+                word: "Traffic jam",
+                question: "Getting stuck in a ________ during rush hour is very frustrating.",
+                options: [
+                    { letter: "A", text: "cycle path", correct: false, explain: "làn đường cho xe đạp." },
+                    { letter: "B", text: "pedestrian zone", correct: false, explain: "khu phố đi bộ." },
+                    { letter: "C", text: "traffic jam", correct: true, explain: "sự tắc đường / kẹt xe." },
+                    { letter: "D", text: "carbon footprint", correct: false, explain: "vết carbon." }
+                ]
+            },
+            {
+                word: "City dweller",
+                question: "Many ________s prefer using public transport to avoid parking problems.",
+                options: [
+                    { letter: "A", text: "city dweller", correct: true, explain: "cư dân thành phố." },
+                    { letter: "B", text: "architect", correct: false, explain: "kiến trúc sư." },
+                    { letter: "C", text: "expert", correct: false, explain: "chuyên gia." },
+                    { letter: "D", text: "victim", correct: false, explain: "nạn nhân." }
+                ]
+            },
+            {
+                word: "Efficiently",
+                question: "The new smart grid manages power consumption very ________.",
+                options: [
+                    { letter: "A", text: "smoothly", correct: false, explain: "trôi chảy, êm xát (chỉ sự vận hành không trở ngại)." },
+                    { letter: "B", text: "efficiently", correct: true, explain: "một cách hiệu quả (tối ưu năng lượng)." },
+                    { letter: "C", text: "interactively", correct: false, explain: "một cách tương tác." },
+                    { letter: "D", text: "securely", correct: false, explain: "một cách an toàn." }
+                ]
+            },
+            {
+                word: "Efficient",
+                question: "Public transport needs to be fast and ________ to attract more passengers.",
+                options: [
+                    { letter: "A", text: "renewable", correct: false, explain: "có thể tái tạo." },
+                    { letter: "B", text: "livable", correct: false, explain: "đáng sống." },
+                    { letter: "C", text: "efficient", correct: true, explain: "có hiệu quả, năng suất tốt." },
+                    { letter: "D", text: "suburban", correct: false, explain: "ngoại ô." }
+                ]
+            },
+            {
+                word: "Efficiency",
+                question: "Installing solar panels can improve energy ________ in modern buildings.",
+                options: [
+                    { letter: "A", text: "efficiency", correct: true, explain: "hiệu suất / sự hiệu quả (hiệu suất năng lượng)." },
+                    { letter: "B", text: "biodiversity", correct: false, explain: "đa dạng sinh học." },
+                    { letter: "C", text: "privacy", correct: false, explain: "sự riêng tư." },
+                    { letter: "D", text: "security", correct: false, explain: "sự an ninh." }
+                ]
+            },
+            {
+                word: "Infrastructure",
+                question: "The government is investing heavily in transport ________ like roads and bridges.",
+                options: [
+                    { letter: "A", text: "architecture", correct: false, explain: "kiến trúc." },
+                    { letter: "B", text: "infrastructure", correct: true, explain: "cơ sở hạ tầng (đường xá, cầu cống)." },
+                    { letter: "C", text: "living conditions", correct: false, explain: "điều kiện sống." },
+                    { letter: "D", text: "emission", correct: false, explain: "khí thải." }
+                ]
+            },
+            {
+                word: "High-rise",
+                question: "Living in a ________ apartment building gives you a great view of the city.",
+                options: [
+                    { letter: "A", text: "suburban", correct: false, explain: "thuộc ngoại ô." },
+                    { letter: "B", text: "high-rise", correct: true, explain: "cao tầng (tòa nhà cao tầng)." },
+                    { letter: "C", text: "interactive", correct: false, explain: "tương tác." },
+                    { letter: "D", text: "non-renewable", correct: false, explain: "không tái tạo." }
+                ]
+            },
+            {
+                word: "Carbon footprint",
+                question: "Using public transit helps individuals reduce their personal ________.",
+                options: [
+                    { letter: "A", text: "living conditions", correct: false, explain: "điều kiện sống." },
+                    { letter: "B", text: "sense of community", correct: false, explain: "ý thức cộng đồng." },
+                    { letter: "C", text: "carbon footprint", correct: true, explain: "vết carbon / lượng khí thải carbon cá nhân." },
+                    { letter: "D", text: "rush hour", correct: false, explain: "giờ cao điểm." }
+                ]
+            },
+            {
+                word: "Transport",
+                question: "Bicycles are a eco-friendly mode of ________ in crowded cities.",
+                options: [
+                    { letter: "A", text: "transport", correct: true, explain: "giao thông / phương tiện đi lại." },
+                    { letter: "B", text: "cybercrime", correct: false, explain: "tội phạm mạng." },
+                    { letter: "C", text: "impact", correct: false, explain: "tác động." },
+                    { letter: "D", text: "privacy", correct: false, explain: "sự riêng tư." }
+                ]
+            },
+            {
+                word: "Urban centre",
+                question: "Property prices in the ________ are usually much higher than in the suburbs.",
+                options: [
+                    { letter: "A", text: "neighborhood", correct: false, explain: "khu xóm giềng." },
+                    { letter: "B", text: "pedestrian zone", correct: false, explain: "khu vực đi bộ." },
+                    { letter: "C", text: "urban centre", correct: true, explain: "trung tâm đô thị." },
+                    { letter: "D", text: "cycle path", correct: false, explain: "đường dành cho xe đạp." }
+                ]
+            },
+            {
+                word: "Roof garden",
+                question: "A ________ helps keep the building cool and adds green space to the city.",
+                options: [
+                    { letter: "A", text: "skyscraper", correct: false, explain: "tòa nhà cao tầng." },
+                    { letter: "B", text: "roof garden", correct: true, explain: "vườn trên mái nhà." },
+                    { letter: "C", text: "high-rise", correct: false, explain: "cao tầng." },
+                    { letter: "D", text: "urban centre", correct: false, explain: "trung tâm đô thị." }
+                ]
+            },
+            {
+                word: "Skyscraper",
+                question: "The Landmark 81 is a famous ________ in Ho Chi Minh City.",
+                options: [
+                    { letter: "A", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "B", text: "urban centre", correct: false, explain: "trung tâm đô thị." },
+                    { letter: "C", text: "skyscraper", correct: true, explain: "tòa nhà chọc trời." },
+                    { letter: "D", text: "exhibition", correct: false, explain: "triển lãm." }
+                ]
+            },
+            {
+                word: "Smoothly",
+                question: "Thanks to traffic light optimization, cars can now move ________.",
+                options: [
+                    { letter: "A", text: "smoothly", correct: true, explain: "một cách trôi chảy / mượt mà." },
+                    { letter: "B", text: "interactively", correct: false, explain: "tương tác." },
+                    { letter: "C", text: "sustainably", correct: false, explain: "bền vững." },
+                    { letter: "D", text: "efficiently", correct: false, explain: "hiệu quả." }
+                ]
+            },
+            {
+                word: "Architecture",
+                question: "Modern ________ in smart cities focuses on energy saving and green spaces.",
+                options: [
+                    { letter: "A", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "B", text: "architecture", correct: true, explain: "kiến trúc." },
+                    { letter: "C", text: "biodiversity", correct: false, explain: "đa dạng sinh học." },
+                    { letter: "D", text: "cybercrime", correct: false, explain: "tội phạm mạng." }
+                ]
+            },
+            {
+                word: "Architect",
+                question: "The ________ designed a building that uses natural light to save electricity.",
+                options: [
+                    { letter: "A", text: "expert", correct: false, explain: "chuyên gia." },
+                    { letter: "B", text: "architect", correct: true, explain: "kiến trúc sư." },
+                    { letter: "C", text: "city dweller", correct: false, explain: "dân đô thị." },
+                    { letter: "D", text: "neighbor", correct: false, explain: "hàng xóm." }
+                ]
+            },
+            {
+                word: "Suburban",
+                question: "Many families move to ________ areas to enjoy a quieter environment.",
+                options: [
+                    { letter: "A", text: "urban", correct: false, explain: "thuộc thành thị." },
+                    { letter: "B", text: "suburban", correct: true, explain: "thuộc ngoại ô." },
+                    { letter: "C", text: "interactive", correct: false, explain: "tương tác." },
+                    { letter: "D", text: "high-rise", correct: false, explain: "cao tầng." }
+                ]
+            },
+            {
+                word: "Sustainable",
+                question: "Solar energy is a ________ resource that will not run out.",
+                options: [
+                    { letter: "A", text: "non-renewable", correct: false, explain: "không thể tái tạo." },
+                    { letter: "B", text: "sustainable", correct: true, explain: "bền vững (phát triển bền vững/năng lượng bền vững)." },
+                    { letter: "C", text: "computer-controlled", correct: false, explain: "điều khiển bằng máy tính." },
+                    { letter: "D", text: "suburban", correct: false, explain: "ngoại ô." }
+                ]
+            },
+            {
+                word: "Sensor",
+                question: "The automatic lights turn on when the motion ________ detects movement.",
+                options: [
+                    { letter: "A", text: "sensor", correct: true, explain: "cảm biến (cảm biến chuyển động)." },
+                    { letter: "B", text: "vehicle", correct: false, explain: "phương tiện." },
+                    { letter: "C", text: "architect", correct: false, explain: "kiến trúc sư." },
+                    { letter: "D", text: "victim", correct: false, explain: "nạn nhân." }
+                ]
+            },
+            {
+                word: "Biodiversity",
+                question: "Building city parks is important to preserve urban ________.",
+                options: [
+                    { letter: "A", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "B", text: "biodiversity", correct: true, explain: "độ đa dạng sinh học." },
+                    { letter: "C", text: "cybercrime", correct: false, explain: "tội phạm mạng." },
+                    { letter: "D", text: "privacy", correct: false, explain: "sự riêng tư." }
+                ]
+            },
+            {
+                word: "Renewable",
+                question: "Wind and solar power are forms of ________ energy.",
+                options: [
+                    { letter: "A", text: "non-renewable", correct: false, explain: "không thể tái tạo." },
+                    { letter: "B", text: "renewable", correct: true, explain: "có thể tái tạo." },
+                    { letter: "C", text: "eco-friendly", correct: false, explain: "thân thiện môi trường (tuy đúng tính chất nhưng renewable energy là cụm cố định)." },
+                    { letter: "D", text: "suburban", correct: false, explain: "ngoại ô." }
+                ]
+            },
+            {
+                word: "Non-renewable",
+                question: "Coal and oil are ________ energy sources that harm the environment.",
+                options: [
+                    { letter: "A", text: "renewable", correct: false, explain: "có thể tái tạo." },
+                    { letter: "B", text: "non-renewable", correct: true, explain: "không thể tái tạo." },
+                    { letter: "C", text: "sustainable", correct: false, explain: "bền vững." },
+                    { letter: "D", text: "livable", correct: false, explain: "đáng sống." }
+                ]
+            },
+            {
+                word: "Eco-friendly",
+                question: "Using reusable bags is an ________ habit that cuts plastic waste.",
+                options: [
+                    { letter: "A", text: "eco-friendly", correct: true, explain: "thân thiện với môi trường." },
+                    { letter: "B", text: "interactive", correct: false, explain: "có tính tương tác." },
+                    { letter: "C", text: "high-rise", correct: false, explain: "cao tầng." },
+                    { letter: "D", text: "suburban", correct: false, explain: "ngoại ô." }
+                ]
+            },
+            {
+                word: "Computer - controlled",
+                question: "Smart traffic lights are ________ to adjust green lights according to real-time traffic.",
+                options: [
+                    { letter: "A", text: "eco-friendly", correct: false, explain: "thân thiện môi trường." },
+                    { letter: "B", text: "computer-controlled", correct: true, explain: "được điều khiển bằng máy tính." },
+                    { letter: "C", text: "interactive", correct: false, explain: "tương tác." },
+                    { letter: "D", text: "sustainable", correct: false, explain: "bền vững." }
+                ]
+            },
+            {
+                word: "Emission",
+                question: "Strict laws are needed to reduce greenhouse gas ________ from factories.",
+                options: [
+                    { letter: "A", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "B", text: "emission", correct: true, explain: "khí thải / sự phát thải." },
+                    { letter: "C", text: "biodiversity", correct: false, explain: "độ đa dạng sinh học." },
+                    { letter: "D", text: "exhibition", correct: false, explain: "triển lãm." }
+                ]
+            },
+            {
+                word: "Pedestrian zone",
+                question: "Cars are not allowed in the ________, making it safe for people to walk.",
+                options: [
+                    { letter: "A", text: "pedestrian zone", correct: true, explain: "khu vực dành cho người đi bộ." },
+                    { letter: "B", text: "urban centre", correct: false, explain: "trung tâm đô thị." },
+                    { letter: "C", text: "cycle path", correct: false, explain: "đường xe đạp." },
+                    { letter: "D", text: "traffic jam", correct: false, explain: "sự kẹt xe." }
+                ]
+            },
+            {
+                word: "Cycle path",
+                question: "The city built a dedicated ________ to encourage people to ride bikes safely.",
+                options: [
+                    { letter: "A", text: "pedestrian zone", correct: false, explain: "phố đi bộ." },
+                    { letter: "B", text: "cycle path", correct: true, explain: "đường / làn đường dành riêng cho xe đạp." },
+                    { letter: "C", text: "traffic jam", correct: false, explain: "tắc đường." },
+                    { letter: "D", text: "urban centre", correct: false, explain: "trung tâm đô thị." }
+                ]
+            },
+            {
+                word: "Livable",
+                question: "Clean air and green spaces make a city more ________ for its residents.",
+                options: [
+                    { letter: "A", text: "livable", correct: true, explain: "đáng sống." },
+                    { letter: "B", text: "suburban", correct: false, explain: "ngoại ô." },
+                    { letter: "C", text: "non-renewable", correct: false, explain: "không thể tái tạo." },
+                    { letter: "D", text: "interactive", correct: false, explain: "tương tác." }
+                ]
+            },
+            {
+                word: "Living conditions",
+                question: "Upgrading old housing will improve the ________ of local people.",
+                options: [
+                    { letter: "A", text: "carbon footprint", correct: false, explain: "vết carbon." },
+                    { letter: "B", text: "living conditions", correct: true, explain: "điều kiện sống / sinh hoạt." },
+                    { letter: "C", text: "sense of community", correct: false, explain: "ý thức cộng đồng." },
+                    { letter: "D", text: "rush hour", correct: false, explain: "giờ cao điểm." }
+                ]
+            },
+            {
+                word: "Rush hour",
+                question: "Buses are usually packed with commuters during morning ________.",
+                options: [
+                    { letter: "A", text: "pedestrian zone", correct: false, explain: "phố đi bộ." },
+                    { letter: "B", text: "rush hour", correct: true, explain: "giờ cao điểm." },
+                    { letter: "C", text: "cycle path", correct: false, explain: "làn xe đạp." },
+                    { letter: "D", text: "roof garden", correct: false, explain: "vườn mái." }
+                ]
+            },
+            {
+                word: "Interact",
+                question: "Smart apps allow citizens to ________ directly with city officials.",
+                options: [
+                    { letter: "A", text: "extend", correct: false, explain: "mở rộng." },
+                    { letter: "B", text: "interact", correct: true, explain: "tương tác / giao tiếp." },
+                    { letter: "C", text: "secure", correct: false, explain: "bảo vệ / đảm bảo." },
+                    { letter: "D", text: "impact", correct: false, explain: "tác động." }
+                ]
+            },
+            {
+                word: "Interaction",
+                question: "Social media encourages more ________ between people in different countries.",
+                options: [
+                    { letter: "A", text: "interaction", correct: true, explain: "sự tương tác." },
+                    { letter: "B", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "C", text: "biodiversity", correct: false, explain: "đa dạng sinh học." },
+                    { letter: "D", text: "emission", correct: false, explain: "khí thải." }
+                ]
+            },
+            {
+                word: "Interactive",
+                question: "Students enjoy learning with ________ maps on smart boards.",
+                options: [
+                    { letter: "A", text: "livable", correct: false, explain: "đáng sống." },
+                    { letter: "B", text: "interactive", correct: true, explain: "có tính tương tác." },
+                    { letter: "C", text: "suburban", correct: false, explain: "ngoại ô." },
+                    { letter: "D", text: "efficient", correct: false, explain: "hiệu quả." }
+                ]
+            },
+            {
+                word: "Neighbor",
+                question: "My ________ kindly watered my plants while I was on vacation.",
+                options: [
+                    { letter: "A", text: "expert", correct: false, explain: "chuyên gia." },
+                    { letter: "B", text: "neighbor", correct: true, explain: "người hàng xóm." },
+                    { letter: "C", text: "architect", correct: false, explain: "kiến trúc sư." },
+                    { letter: "D", text: "victim", correct: false, explain: "nạn nhân." }
+                ]
+            },
+            {
+                word: "Neighborhood",
+                question: "There are several parks and grocery stores in our local ________.",
+                options: [
+                    { letter: "A", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "B", text: "neighborhood", correct: true, explain: "khu vực xóm giềng / khu phố." },
+                    { letter: "C", text: "urban centre", correct: false, explain: "trung tâm đô thị." },
+                    { letter: "D", text: "pedestrian zone", correct: false, explain: "phố đi bộ." }
+                ]
+            },
+            {
+                word: "Privacy",
+                question: "Smart cameras enhance security, but some people worry about their ________.",
+                options: [
+                    { letter: "A", text: "privacy", correct: true, explain: "sự riêng tư." },
+                    { letter: "B", text: "biodiversity", correct: false, explain: "đa dạng sinh học." },
+                    { letter: "C", text: "efficiency", correct: false, explain: "hiệu quả." },
+                    { letter: "D", text: "emission", correct: false, explain: "khí thải." }
+                ]
+            },
+            {
+                word: "Sense of community",
+                question: "Organizing local events helps build a strong ________ among residents.",
+                options: [
+                    { letter: "A", text: "carbon footprint", correct: false, explain: "vết carbon." },
+                    { letter: "B", text: "sense of community", correct: true, explain: "ý thức / tinh thần cộng đồng." },
+                    { letter: "C", text: "living conditions", correct: false, explain: "điều kiện sống." },
+                    { letter: "D", text: "traffic jam", correct: false, explain: "kẹt xe." }
+                ]
+            },
+            {
+                word: "Security",
+                question: "Installing CCTV cameras will improve overall ________ in the neighborhood.",
+                options: [
+                    { letter: "A", text: "privacy", correct: false, explain: "sự riêng tư." },
+                    { letter: "B", text: "security", correct: true, explain: "an ninh / sự an toàn." },
+                    { letter: "C", text: "biodiversity", correct: false, explain: "độ đa dạng sinh học." },
+                    { letter: "D", text: "architecture", correct: false, explain: "kiến trúc." }
+                ]
+            },
+            {
+                word: "Secure",
+                question: "Make sure your online password is strong to keep your account ________.",
+                options: [
+                    { letter: "A", text: "livable", correct: false, explain: "đáng sống." },
+                    { letter: "B", text: "secure", correct: true, explain: "an toàn / bảo mật." },
+                    { letter: "C", text: "sustainable", correct: false, explain: "bền vững." },
+                    { letter: "D", text: "suburban", correct: false, explain: "ngoại ô." }
+                ]
+            },
+            {
+                word: "Advantage",
+                question: "One major ________ of living in a smart city is modern convenience.",
+                options: [
+                    { letter: "A", text: "disadvantage", correct: false, explain: "nhược điểm." },
+                    { letter: "B", text: "advantage", correct: true, explain: "ưu điểm / lợi thế." },
+                    { letter: "C", text: "victim", correct: false, explain: "nạn nhân." },
+                    { letter: "D", text: "impact", correct: false, explain: "tác động." }
+                ]
+            },
+            {
+                word: "Disadvantage",
+                question: "High cost of living is a main ________ of big city life.",
+                options: [
+                    { letter: "A", text: "advantage", correct: false, explain: "ưu điểm." },
+                    { letter: "B", text: "disadvantage", correct: true, explain: "nhược điểm / bất lợi." },
+                    { letter: "C", text: "privacy", correct: false, explain: "sự riêng tư." },
+                    { letter: "D", text: "efficiency", correct: false, explain: "hiệu quả." }
+                ]
+            },
+            {
+                word: "Victim",
+                question: "The police advised people how to avoid becoming a ________ of fraud.",
+                options: [
+                    { letter: "A", text: "expert", correct: false, explain: "chuyên gia." },
+                    { letter: "B", text: "victim", correct: true, explain: "nạn nhân." },
+                    { letter: "C", text: "architect", correct: false, explain: "kiến trúc sư." },
+                    { letter: "D", text: "neighbor", correct: false, explain: "hàng xóm." }
+                ]
+            },
+            {
+                word: "Cybercrime",
+                question: "As cities become digitized, protection against ________ is crucial.",
+                options: [
+                    { letter: "A", text: "traffic jam", correct: false, explain: "tắc đường." },
+                    { letter: "B", text: "cybercrime", correct: true, explain: "tội phạm công nghệ cao / tội phạm mạng." },
+                    { letter: "C", text: "infrastructure", correct: false, explain: "cơ sở hạ tầng." },
+                    { letter: "D", text: "biodiversity", correct: false, explain: "đa dạng sinh học." }
+                ]
+            },
+            {
+                word: "Expert",
+                question: "The city invited an ________ in urban planning to give advice.",
+                options: [
+                    { letter: "A", text: "victim", correct: false, explain: "nạn nhân." },
+                    { letter: "B", text: "expert", correct: true, explain: "chuyên gia." },
+                    { letter: "C", text: "city dweller", correct: false, explain: "cư dân." },
+                    { letter: "D", text: "neighbor", correct: false, explain: "hàng xóm." }
+                ]
+            },
+            {
+                word: "Extend",
+                question: "The government plans to ________ the metro line to outer districts.",
+                options: [
+                    { letter: "A", text: "interact", correct: false, explain: "tương tác." },
+                    { letter: "B", text: "extend", correct: true, explain: "mở rộng / kéo dài." },
+                    { letter: "C", text: "secure", correct: false, explain: "bảo vệ." },
+                    { letter: "D", text: "impact", correct: false, explain: "tác động." }
+                ]
+            }
+        ];
+
+        let currentQuestions = [];
+        let userAnswers = {}; // { qIndex: { chosen: letter, correct: boolean } }
+
+        // Shuffle function
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Initialize / Reset Quiz
+        function initQuiz(shouldShuffle = false) {
+            userAnswers = {};
+            
+            // Clone original questions
+            let questionsToUse = JSON.parse(JSON.stringify(originalQuestions));
+
+            if (shouldShuffle) {
+                // Shuffle questions order
+                questionsToUse = shuffleArray(questionsToUse);
+                // Shuffle options order for each question
+                questionsToUse.forEach(q => {
+                    q.options = shuffleArray(q.options);
+                });
+            }
+
+            currentQuestions = questionsToUse;
+            renderQuiz();
+            updateStats();
+            document.getElementById('summary-card').classList.remove('active');
+            
+            if (shouldShuffle) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Render Questions to HTML
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+
+            currentQuestions.forEach((q, qIndex) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${qIndex}`;
+
+                let optionsHtml = '';
+                const labels = ['A', 'B', 'C', 'D'];
+                
+                q.options.forEach((opt, oIndex) => {
+                    const label = labels[oIndex];
+                    optionsHtml += `
+                        <button class="option-btn" 
+                                id="btn-${qIndex}-${oIndex}" 
+                                onclick="selectAnswer(${qIndex}, ${oIndex})">
+                            <strong>${label}.</strong>&nbsp;${opt.text}
+                        </button>
+                    `;
+                });
+
+                let explanationHtml = `
+                    <div class="explanation-box" id="exp-${qIndex}">
+                        <div class="explanation-title">📌 Giải thích chi tiết:</div>
+                `;
+                
+                q.options.forEach((opt, oIndex) => {
+                    const label = labels[oIndex];
+                    const statusTag = opt.correct ? "<span style='color: var(--correct); font-weight: bold;'>[ĐÁP ÁN ĐÚNG]</span>" : "";
+                    explanationHtml += `
+                        <div class="explanation-item">
+                            <strong>${label}. ${opt.text}</strong> ${statusTag}: ${opt.explain}
+                        </div>
+                    `;
+                });
+                explanationHtml += `</div>`;
+
+                card.innerHTML = `
+                    <div class="question-title">Câu ${qIndex + 1}: ${q.question}</div>
+                    <div class="options-list">${optionsHtml}</div>
+                    ${explanationHtml}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Handle option selection
+        function selectAnswer(qIndex, selectedOIndex) {
+            if (userAnswers[qIndex] !== undefined) return; // Already answered
+
+            const question = currentQuestions[qIndex];
+            const selectedOpt = question.options[selectedOIndex];
+            const isCorrect = selectedOpt.correct;
+
+            userAnswers[qIndex] = {
+                selectedOIndex: selectedOIndex,
+                isCorrect: isCorrect
+            };
+
+            // Lock all options in this question & apply styles
+            const labels = ['A', 'B', 'C', 'D'];
+            question.options.forEach((opt, oIndex) => {
+                const btn = document.getElementById(`btn-${qIndex}-${oIndex}`);
+                btn.disabled = true;
+
+                if (oIndex === selectedOIndex) {
+                    if (isCorrect) {
+                        btn.classList.add('selected-correct');
+                    } else {
+                        btn.classList.add('selected-incorrect');
+                    }
+                } else if (opt.correct) {
+                    btn.classList.add('show-correct');
+                }
+            });
+
+            // Show explanation box
+            document.getElementById(`exp-${qIndex}`).classList.add('active');
+
+            updateStats();
+        }
+
+        // Update real-time statistics
+        function updateStats() {
+            const total = currentQuestions.length;
+            const done = Object.keys(userAnswers).length;
+            let correct = 0;
+
+            Object.values(userAnswers).forEach(ans => {
+                if (ans.isCorrect) correct++;
+            });
+
+            const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-done').innerText = done;
+            document.getElementById('stat-correct').innerText = correct;
+            document.getElementById('stat-percent').innerText = percent + '%';
+
+            // Show summary when completed
+            if (done === total && total > 0) {
+                const finalPercent = Math.round((correct / total) * 100);
+                document.getElementById('sum-total').innerText = total;
+                document.getElementById('sum-correct').innerText = correct;
+                document.getElementById('sum-percent').innerText = finalPercent + '%';
+                document.getElementById('summary-card').classList.add('active');
+            }
+        }
+
+        // Initialize quiz on page load
+        window.onload = function() {
+            initQuiz(false);
+        };
+    </script>
+</body>
+</html>
